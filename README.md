@@ -45,8 +45,13 @@ Removes the trained model.
 ### OpenShift Model Serving
 
 ```
-$ oc new-app https://github.com/bkoz/sklearnflask
-$ oc set env dc/sklearnflask APP_FILE=main.py
-$ oc expose service sklearnflask
+$ oc new-app https://github.com/bkoz/sklearnflask -e APP_FILE=main.py
+
+$ curl -d '[
+    {"Age": 85, "Sex": "male", "Embarked": "S"},
+    {"Age": 24, "Sex": "female", "Embarked": "C"},
+    {"Age": 3, "Sex": "male", "Embarked": "C"},
+    {"Age": 21, "Sex": "male", "Embarked": "S"}
+]' -H "Content-Type: application/json"      -X POST http://<route>/predict
 ```
 
