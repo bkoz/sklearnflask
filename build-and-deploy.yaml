@@ -1,0 +1,939 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/networks-status: ""
+      openshift.io/build.name: sklearnflask-1
+      openshift.io/scc: privileged
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    labels:
+      openshift.io/build.name: sklearnflask-1
+    name: sklearnflask-1-build
+    namespace: model
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: Build
+      name: sklearnflask-1
+      uid: 234b2830-4390-418d-a407-051f588945ef
+    resourceVersion: "360632276"
+    selfLink: /api/v1/namespaces/model/pods/sklearnflask-1-build
+    uid: d3f4d979-33b7-4288-bd51-19f8e54166ad
+  spec:
+    activeDeadlineSeconds: 604800
+    containers:
+    - args:
+      - --loglevel=0
+      command:
+      - openshift-sti-build
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"sklearnflask-1","namespace":"model","selfLink":"/apis/build.openshift.io/v1/namespaces/model/builds/sklearnflask-1","uid":"234b2830-4390-418d-a407-051f588945ef","resourceVersion":"360629819","creationTimestamp":"2020-11-12T01:59:27Z","labels":{"app":"sklearnflask","app.kubernetes.io/component":"sklearnflask","app.kubernetes.io/instance":"sklearnflask","buildconfig":"sklearnflask","openshift.io/build-config.name":"sklearnflask","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"sklearnflask","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"sklearnflask","uid":"37ca3f96-bb69-4acc-8c53-78a4b1740c5c","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/bkoz/sklearnflask"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b"},"pullSecret":{"name":"builder-dockercfg-p5hzr"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest"},"pushSecret":{"name":"builder-dockercfg-p5hzr"}},"resources":{"limits":{"cpu":"1","memory":"3Gi"},"requests":{"cpu":"1","memory":"2Gi"}},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Image change","imageChangeBuild":{"imageID":"image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b","fromRef":{"kind":"ImageStreamTag","namespace":"openshift","name":"python:3.6"}}}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest","config":{"kind":"BuildConfig","namespace":"model","name":"sklearnflask"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2020-11-12T01:59:27Z","lastTransitionTime":"2020-11-12T01:59:27Z"}]}}
+      - name: LANG
+        value: en_US.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/bkoz/sklearnflask
+      - name: SOURCE_URI
+        value: https://github.com/bkoz/sklearnflask
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID
+      - name: PUSH_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/push
+      - name: PULL_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/pull
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_STORAGE_DRIVER
+        value: overlay
+      - name: BUILD_ISOLATION
+        value: chroot
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      imagePullPolicy: IfNotPresent
+      name: sti-build
+      resources:
+        limits:
+          cpu: "1"
+          memory: 3Gi
+        requests:
+          cpu: "1"
+          memory: 2Gi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/lib/containers/cache
+        name: buildcachedir
+      - mountPath: /var/run/secrets/openshift.io/push
+        name: builder-dockercfg-p5hzr-push
+        readOnly: true
+      - mountPath: /var/run/secrets/openshift.io/pull
+        name: builder-dockercfg-p5hzr-pull
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: build-proxy-ca-bundles
+      - mountPath: /var/lib/containers/storage
+        name: container-storage-root
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-cxbsp
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: builder-dockercfg-p5hzr
+    initContainers:
+    - args:
+      - --loglevel=0
+      command:
+      - openshift-git-clone
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"sklearnflask-1","namespace":"model","selfLink":"/apis/build.openshift.io/v1/namespaces/model/builds/sklearnflask-1","uid":"234b2830-4390-418d-a407-051f588945ef","resourceVersion":"360629819","creationTimestamp":"2020-11-12T01:59:27Z","labels":{"app":"sklearnflask","app.kubernetes.io/component":"sklearnflask","app.kubernetes.io/instance":"sklearnflask","buildconfig":"sklearnflask","openshift.io/build-config.name":"sklearnflask","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"sklearnflask","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"sklearnflask","uid":"37ca3f96-bb69-4acc-8c53-78a4b1740c5c","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/bkoz/sklearnflask"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b"},"pullSecret":{"name":"builder-dockercfg-p5hzr"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest"},"pushSecret":{"name":"builder-dockercfg-p5hzr"}},"resources":{"limits":{"cpu":"1","memory":"3Gi"},"requests":{"cpu":"1","memory":"2Gi"}},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Image change","imageChangeBuild":{"imageID":"image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b","fromRef":{"kind":"ImageStreamTag","namespace":"openshift","name":"python:3.6"}}}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest","config":{"kind":"BuildConfig","namespace":"model","name":"sklearnflask"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2020-11-12T01:59:27Z","lastTransitionTime":"2020-11-12T01:59:27Z"}]}}
+      - name: LANG
+        value: en_US.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/bkoz/sklearnflask
+      - name: SOURCE_URI
+        value: https://github.com/bkoz/sklearnflask
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      imagePullPolicy: IfNotPresent
+      name: git-clone
+      resources:
+        limits:
+          cpu: "1"
+          memory: 3Gi
+        requests:
+          cpu: "1"
+          memory: 2Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: build-proxy-ca-bundles
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-cxbsp
+        readOnly: true
+    - args:
+      - --loglevel=0
+      command:
+      - openshift-manage-dockerfile
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"sklearnflask-1","namespace":"model","selfLink":"/apis/build.openshift.io/v1/namespaces/model/builds/sklearnflask-1","uid":"234b2830-4390-418d-a407-051f588945ef","resourceVersion":"360629819","creationTimestamp":"2020-11-12T01:59:27Z","labels":{"app":"sklearnflask","app.kubernetes.io/component":"sklearnflask","app.kubernetes.io/instance":"sklearnflask","buildconfig":"sklearnflask","openshift.io/build-config.name":"sklearnflask","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"sklearnflask","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"sklearnflask","uid":"37ca3f96-bb69-4acc-8c53-78a4b1740c5c","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/bkoz/sklearnflask"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b"},"pullSecret":{"name":"builder-dockercfg-p5hzr"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest"},"pushSecret":{"name":"builder-dockercfg-p5hzr"}},"resources":{"limits":{"cpu":"1","memory":"3Gi"},"requests":{"cpu":"1","memory":"2Gi"}},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Image change","imageChangeBuild":{"imageID":"image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b","fromRef":{"kind":"ImageStreamTag","namespace":"openshift","name":"python:3.6"}}}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest","config":{"kind":"BuildConfig","namespace":"model","name":"sklearnflask"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2020-11-12T01:59:27Z","lastTransitionTime":"2020-11-12T01:59:27Z"}]}}
+      - name: LANG
+        value: en_US.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/bkoz/sklearnflask
+      - name: SOURCE_URI
+        value: https://github.com/bkoz/sklearnflask
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      imagePullPolicy: IfNotPresent
+      name: manage-dockerfile
+      resources:
+        limits:
+          cpu: "1"
+          memory: 3Gi
+        requests:
+          cpu: "1"
+          memory: 2Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: build-proxy-ca-bundles
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-cxbsp
+        readOnly: true
+    nodeName: ip-10-0-129-168.us-west-2.compute.internal
+    nodeSelector:
+      kubernetes.io/os: linux
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: builder
+    serviceAccountName: builder
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /var/lib/containers/cache
+        type: ""
+      name: buildcachedir
+    - emptyDir: {}
+      name: buildworkdir
+    - name: builder-dockercfg-p5hzr-push
+      secret:
+        defaultMode: 384
+        secretName: builder-dockercfg-p5hzr
+    - name: builder-dockercfg-p5hzr-pull
+      secret:
+        defaultMode: 384
+        secretName: builder-dockercfg-p5hzr
+    - configMap:
+        defaultMode: 420
+        name: sklearnflask-1-sys-config
+      name: build-system-configs
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: service-ca.crt
+          path: certs.d/image-registry.openshift-image-registry.svc:5000/ca.crt
+        name: sklearnflask-1-ca
+      name: build-ca-bundles
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: sklearnflask-1-global-ca
+      name: build-proxy-ca-bundles
+    - emptyDir: {}
+      name: container-storage-root
+    - emptyDir: {}
+      name: build-blob-cache
+    - name: builder-token-cxbsp
+      secret:
+        defaultMode: 420
+        secretName: builder-token-cxbsp
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T01:59:32Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T02:01:03Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T02:01:03Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T01:59:27Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://20d15e41b3451bcd609bc3d21ad3435b4f8b410206c0c3e5841081b16a14d8f6
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      lastState: {}
+      name: sti-build
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://20d15e41b3451bcd609bc3d21ad3435b4f8b410206c0c3e5841081b16a14d8f6
+          exitCode: 0
+          finishedAt: "2020-11-12T02:01:03Z"
+          reason: Completed
+          startedAt: "2020-11-12T01:59:32Z"
+    hostIP: 10.0.129.168
+    initContainerStatuses:
+    - containerID: cri-o://45575f5d8be64d6f3b09408431476245b589065f5d284a502269163894087ef8
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      lastState: {}
+      name: git-clone
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://45575f5d8be64d6f3b09408431476245b589065f5d284a502269163894087ef8
+          exitCode: 0
+          finishedAt: "2020-11-12T01:59:31Z"
+          reason: Completed
+          startedAt: "2020-11-12T01:59:29Z"
+    - containerID: cri-o://fc38300ae6d205ca39663b1e342a5dfed533595d246ddffbcc6d72906d41b315
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:50b92a3702c313800fd5aa8988f6e0a28803503822b31c03e0c5d29ca8f6fd47
+      lastState: {}
+      name: manage-dockerfile
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://fc38300ae6d205ca39663b1e342a5dfed533595d246ddffbcc6d72906d41b315
+          exitCode: 0
+          finishedAt: "2020-11-12T01:59:31Z"
+          reason: Completed
+          startedAt: "2020-11-12T01:59:31Z"
+    phase: Succeeded
+    podIP: 10.131.0.171
+    podIPs:
+    - ip: 10.131.0.171
+    qosClass: Burstable
+    startTime: "2020-11-12T01:59:27Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.130.6.108"
+            ],
+            "dns": {},
+            "default-route": [
+                "10.130.6.1"
+            ]
+        }]
+      kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu, memory request for
+        container sklearnflask; cpu, memory limit for container sklearnflask'
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2020-11-12T02:01:03Z"
+    generateName: sklearnflask-d9c57ff58-
+    labels:
+      deployment: sklearnflask
+      pod-template-hash: d9c57ff58
+    name: sklearnflask-d9c57ff58-nqtgh
+    namespace: model
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: sklearnflask-d9c57ff58
+      uid: 78d7bb5c-a798-4415-b31c-e3b4e5270703
+    resourceVersion: "360632361"
+    selfLink: /api/v1/namespaces/model/pods/sklearnflask-d9c57ff58-nqtgh
+    uid: a2530e1f-7588-4cfa-ad4b-063faa534353
+  spec:
+    containers:
+    - env:
+      - name: APP_FILE
+        value: main.py
+      image: image-registry.openshift-image-registry.svc:5000/model/sklearnflask@sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+      imagePullPolicy: IfNotPresent
+      name: sklearnflask
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1536Mi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1003560000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-lcxrc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-489v9
+    nodeName: ip-10-0-131-162.us-west-2.compute.internal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1003560000
+      seLinuxOptions:
+        level: s0:c60,c10
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    volumes:
+    - name: default-token-lcxrc
+      secret:
+        defaultMode: 420
+        secretName: default-token-lcxrc
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T02:01:03Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T02:01:11Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T02:01:11Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2020-11-12T02:01:03Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://189df18675ef356f5889d076dd7cb88d3365cc0cba3e312cd026b9754fe98765
+      image: image-registry.openshift-image-registry.svc:5000/model/sklearnflask@sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+      imageID: image-registry.openshift-image-registry.svc:5000/model/sklearnflask@sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+      lastState: {}
+      name: sklearnflask
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2020-11-12T02:01:10Z"
+    hostIP: 10.0.131.162
+    phase: Running
+    podIP: 10.130.6.108
+    podIPs:
+    - ip: 10.130.6.108
+    qosClass: Burstable
+    startTime: "2020-11-12T02:01:03Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    labels:
+      app: sklearnflask
+      app.kubernetes.io/component: sklearnflask
+      app.kubernetes.io/instance: sklearnflask
+    name: sklearnflask
+    namespace: model
+    resourceVersion: "360629815"
+    selfLink: /api/v1/namespaces/model/services/sklearnflask
+    uid: dfd5e925-b8bd-4a1f-abab-698bbbaa8e5c
+  spec:
+    clusterIP: 172.30.129.92
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deployment: sklearnflask
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"sklearnflask:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"sklearnflask\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    generation: 2
+    labels:
+      app: sklearnflask
+      app.kubernetes.io/component: sklearnflask
+      app.kubernetes.io/instance: sklearnflask
+    name: sklearnflask
+    namespace: model
+    resourceVersion: "360632368"
+    selfLink: /apis/apps/v1/namespaces/model/deployments/sklearnflask
+    uid: 9c89af1a-830d-457e-8364-b544a6e66bbe
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        deployment: sklearnflask
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: sklearnflask
+      spec:
+        containers:
+        - env:
+          - name: APP_FILE
+            value: main.py
+          image: image-registry.openshift-image-registry.svc:5000/model/sklearnflask@sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+          imagePullPolicy: IfNotPresent
+          name: sklearnflask
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-11-12T02:01:11Z"
+      lastUpdateTime: "2020-11-12T02:01:11Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-11-12T01:59:27Z"
+      lastUpdateTime: "2020-11-12T02:01:11Z"
+      message: ReplicaSet "sklearnflask-d9c57ff58" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"sklearnflask:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"sklearnflask\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    generation: 2
+    labels:
+      deployment: sklearnflask
+      pod-template-hash: 6dd99b5854
+    name: sklearnflask-6dd99b5854
+    namespace: model
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: sklearnflask
+      uid: 9c89af1a-830d-457e-8364-b544a6e66bbe
+    resourceVersion: "360632366"
+    selfLink: /apis/apps/v1/namespaces/model/replicasets/sklearnflask-6dd99b5854
+    uid: b350cafa-8a97-48d6-94ac-ffcc694e62b1
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        deployment: sklearnflask
+        pod-template-hash: 6dd99b5854
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: sklearnflask
+          pod-template-hash: 6dd99b5854
+      spec:
+        containers:
+        - env:
+          - name: APP_FILE
+            value: main.py
+          image: ' '
+          imagePullPolicy: IfNotPresent
+          name: sklearnflask
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"sklearnflask:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"sklearnflask\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-11-12T02:01:03Z"
+    generation: 1
+    labels:
+      deployment: sklearnflask
+      pod-template-hash: d9c57ff58
+    name: sklearnflask-d9c57ff58
+    namespace: model
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: sklearnflask
+      uid: 9c89af1a-830d-457e-8364-b544a6e66bbe
+    resourceVersion: "360632363"
+    selfLink: /apis/apps/v1/namespaces/model/replicasets/sklearnflask-d9c57ff58
+    uid: 78d7bb5c-a798-4415-b31c-e3b4e5270703
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deployment: sklearnflask
+        pod-template-hash: d9c57ff58
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: sklearnflask
+          pod-template-hash: d9c57ff58
+      spec:
+        containers:
+        - env:
+          - name: APP_FILE
+            value: main.py
+          image: image-registry.openshift-image-registry.svc:5000/model/sklearnflask@sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+          imagePullPolicy: IfNotPresent
+          name: sklearnflask
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    labels:
+      app: sklearnflask
+      app.kubernetes.io/component: sklearnflask
+      app.kubernetes.io/instance: sklearnflask
+    name: sklearnflask
+    namespace: model
+    resourceVersion: "360629818"
+    selfLink: /apis/build.openshift.io/v1/namespaces/model/buildconfigs/sklearnflask
+    uid: 37ca3f96-bb69-4acc-8c53-78a4b1740c5c
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: sklearnflask:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        uri: https://github.com/bkoz/sklearnflask
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: python:3.6
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: RD1zvjASaYYOLs1pJH4R
+      type: GitHub
+    - generic:
+        secret: Agh1rUris7t56bZPo4YB
+      type: Generic
+    - type: ConfigChange
+    - imageChange:
+        lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b
+      type: ImageChange
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: sklearnflask
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: sklearnflask-1-build
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    labels:
+      app: sklearnflask
+      app.kubernetes.io/component: sklearnflask
+      app.kubernetes.io/instance: sklearnflask
+      buildconfig: sklearnflask
+      openshift.io/build-config.name: sklearnflask
+      openshift.io/build.start-policy: Serial
+    name: sklearnflask-1
+    namespace: model
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: sklearnflask
+      uid: 37ca3f96-bb69-4acc-8c53-78a4b1740c5c
+    resourceVersion: "360632145"
+    selfLink: /apis/build.openshift.io/v1/namespaces/model/builds/sklearnflask-1
+    uid: 234b2830-4390-418d-a407-051f588945ef
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-p5hzr
+      to:
+        kind: ImageStreamTag
+        name: sklearnflask:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: bkozdemba@gmail.com
+          name: Bob Kozdemba
+        commit: ae3898f5c3b7d123a9ad309843c54f4b79e96b2f
+        committer:
+          email: bkozdemba@gmail.com
+          name: Bob Kozdemba
+        message: updated
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        uri: https://github.com/bkoz/sklearnflask
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b
+        pullSecret:
+          name: builder-dockercfg-p5hzr
+      type: Source
+    triggeredBy:
+    - imageChangeBuild:
+        fromRef:
+          kind: ImageStreamTag
+          name: python:3.6
+          namespace: openshift
+        imageID: image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:627776c4616bd4b93b2c9b7f3b513674e9cebd1f085dbd86e0a756576b372c3b
+      message: Image change
+  status:
+    completionTimestamp: "2020-11-12T02:01:03Z"
+    conditions:
+    - lastTransitionTime: "2020-11-12T01:59:27Z"
+      lastUpdateTime: "2020-11-12T01:59:27Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2020-11-12T01:59:30Z"
+      lastUpdateTime: "2020-11-12T01:59:30Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2020-11-12T02:01:03Z"
+      lastUpdateTime: "2020-11-12T02:01:03Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2020-11-12T02:01:03Z"
+      lastUpdateTime: "2020-11-12T02:01:03Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: sklearnflask
+      namespace: model
+    duration: 96000000000
+    output:
+      to:
+        imageDigest: sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/model/sklearnflask:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 968
+      name: FetchInputs
+      startTime: "2020-11-12T01:59:30Z"
+      steps:
+      - durationMilliseconds: 968
+        name: FetchGitSource
+        startTime: "2020-11-12T01:59:30Z"
+    - durationMilliseconds: 43092
+      name: PullImages
+      startTime: "2020-11-12T01:59:32Z"
+      steps:
+      - durationMilliseconds: 43092
+        name: PullBaseImage
+        startTime: "2020-11-12T01:59:32Z"
+    - durationMilliseconds: 37000
+      name: Build
+      startTime: "2020-11-12T02:00:15Z"
+      steps:
+      - durationMilliseconds: 37000
+        name: DockerBuild
+        startTime: "2020-11-12T02:00:15Z"
+    - durationMilliseconds: 10406
+      name: PushImage
+      startTime: "2020-11-12T02:00:52Z"
+      steps:
+      - durationMilliseconds: 10406
+        name: PushImage
+        startTime: "2020-11-12T02:00:52Z"
+    startTimestamp: "2020-11-12T01:59:27Z"
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-11-12T01:59:27Z"
+    generation: 1
+    labels:
+      app: sklearnflask
+      app.kubernetes.io/component: sklearnflask
+      app.kubernetes.io/instance: sklearnflask
+    name: sklearnflask
+    namespace: model
+    resourceVersion: "360632121"
+    selfLink: /apis/image.openshift.io/v1/namespaces/model/imagestreams/sklearnflask
+    uid: 321618f6-1100-43d5-ac9a-6c8f332c094b
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: image-registry.openshift-image-registry.svc:5000/model/sklearnflask
+    publicDockerImageRepository: default-route-openshift-image-registry.apps.shared-na4.na4.openshift.opentlc.com/model/sklearnflask
+    tags:
+    - items:
+      - created: "2020-11-12T02:01:03Z"
+        dockerImageReference: image-registry.openshift-image-registry.svc:5000/model/sklearnflask@sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+        generation: 1
+        image: sha256:21995cf2c92119d73eb42c2fcb42384307a913acaa675db950957bcc0b1bed0b
+      tag: latest
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
