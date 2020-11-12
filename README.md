@@ -41,3 +41,12 @@ Trains the model. This is currently hard-coded to be a random forest model that 
 
 ### /wipe (GET)
 Removes the trained model.
+
+### OpenShift Model Serving
+
+```
+$ oc new-app https://github.com/bkoz/sklearnflask
+$ oc set env dc/sklearnflask APP_FILE=main.py
+$ oc expose service sklearnflask
+```
+
