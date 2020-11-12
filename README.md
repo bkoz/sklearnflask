@@ -35,7 +35,6 @@ and sample output:
 {"prediction": [0, 1, 1, 0]}
 ```
 
-
 ### /train (GET)
 Trains the model. This is currently hard-coded to be a random forest model that is run on a subset of columns of the titanic dataset.
 
@@ -47,11 +46,6 @@ Removes the trained model.
 ```
 $ oc new-app https://github.com/bkoz/sklearnflask -e APP_FILE=main.py
 
-$ curl -d '[
-    {"Age": 85, "Sex": "male", "Embarked": "S"},
-    {"Age": 24, "Sex": "female", "Embarked": "C"},
-    {"Age": 3, "Sex": "male", "Embarked": "C"},
-    {"Age": 21, "Sex": "male", "Embarked": "S"}
-]' -H "Content-Type: application/json"      -X POST http://<route>/predict
+$ curl -d '[{"Age": 85, "Sex": "male", "Embarked": "S"}]' -H "Content-Type: application/json" -X POST http://<route>/predict
 ```
 
