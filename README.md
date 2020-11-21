@@ -1,6 +1,6 @@
-#A program for scikit learn model serving using the Flask API.
-A simple Flask application that can serve predictions from a scikit-learn model. 
-Reads a pickled sklearn model into memory when the Flask app is started and returns predictions through the /predict endpoint. You can also use the /train endpoint to train/retrain the model. Any sklearn model can be used for prediction.
+# A program for scikit learn model serving using the Flask API.
+
+#### A simple Flask application that can serve predictions from a scikit-learn model. Reads a pickled sklearn model into memory when the Flask app is started and returns predictions through the /predict endpoint. You can also use the /train endpoint to train/retrain the model. Any sklearn model can be used for prediction.
 
 Read more in [this blog post](https://medium.com/@amirziai/a-flask-api-for-serving-scikit-learn-models-c8bcdaa41daa).
 
@@ -45,6 +45,7 @@ Removes the trained model.
 ### OpenShift Model Serving
 
 ```
+$ oc new-project model
 $ oc new-app https://github.com/bkoz/sklearnflask -e APP_FILE=main.py
 $ oc expose svc/sklearnflask
 $ route=$(oc get route sklearnflask -o=custom-columns=HOST/PORT:.spec.host --no-headers)
