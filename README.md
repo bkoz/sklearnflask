@@ -46,7 +46,7 @@ Removes the trained model.
 
 ```
 $ oc new-app https://github.com/bkoz/sklearnflask -e APP_FILE=main.py
-
+$ oc expose svc/sklearnflask
 $ curl -d '[{"Age": 85, "Sex": "male", "Embarked": "S"}]' -H "Content-Type: application/json" -X POST http://<route>/predict
 ```
 
