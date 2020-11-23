@@ -1,4 +1,3 @@
-
 import numpy as np
 #need to 'conda install flask' for this to work
 from flask import Flask, abort, jsonify, request
@@ -25,5 +24,4 @@ def make_predict():
 
 if __name__ == '__main__':
     app.run(port = 9000, debug = True)
-
 
