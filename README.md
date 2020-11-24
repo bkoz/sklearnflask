@@ -43,7 +43,7 @@ Trains the model. This is currently hard-coded to be a random forest model that 
 Removes the trained model.
 
 #### Run on binder
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bkoz/sklearnflask.git/master?urlpath=lab/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bkoz/sklearnflask.git/master?urlpath=lab)
 
 ### OpenShift Model Serving
 
